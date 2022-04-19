@@ -9,15 +9,15 @@ class Main extends Component {
     loading: true,
   };
 
-  searchMovies = (str) => {
+  searchMovies = (str, type = 'all') => {
     this.setState({loading: true});
-    fetch(`http://www.omdbapi.com/?apikey=951b9588&s=${str}`)
+    fetch(`http://www.omdbapi.com/?apikey=951b9588&s=${str}${type !== 'all' ? `&type=${type}` : ''}`)
       .then((response) => response.json())
       .then((data) => this.setState({ movies: data.Search, loading: false }));
   };
 
   componentDidMount() {
-    fetch("http://www.omdbapi.com/?apikey=951b9588&s=matrix")
+    fetch("http://www.omdbapi.com/?apikey=951b9588&s=terminator")
       .then((response) => response.json())
       .then((data) => this.setState({ movies: data.Search, loading: false }));
   }

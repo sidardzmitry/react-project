@@ -17,7 +17,7 @@ const Movie = (props) => {
           <h5 className="card-title text-dark">{title}</h5>
           <p className="card-text text-dark">
             {year}
-            <span className="text-dark">{type}</span>
+            <div className="text-dark">{type}</div>
           </p>
         </div>
       </div>

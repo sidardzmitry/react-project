@@ -9,7 +9,7 @@ const Movies = (props) => {
         {movies.length ? (
           movies.map((movie) => 
             <Movie key={movie.imdbID} {...movie} />)
-        ) : (<h3>Ничего не найдено</h3>
+        ) : (<h3>Nothing found for your request</h3>
         )}
     </div>
   );
