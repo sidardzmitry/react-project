@@ -11,32 +11,35 @@ class Search extends Component {
 
   handleKey = (event) => {
     if (event.key === "Enter") {
-        this.props.searchMovies(this.state.search);
+      this.props.searchMovies(this.state.search);
+      this.setState({ search: "" });
     }
   };
-  handleBtn = () => {
-      this.props.searchMovies(this.state.search);
-  }
 
   render() {
     return (
-      <form className="d-flex">
-        <input
-          className="form-control me-2"
-          type="search"
-          placeholder="Search"
-          aria-label="Search"
-          value={this.state.search}
-          onChange={this.changeInput}
-          onKeyDown={this.handleKey}
-        />
-        <button 
-        className="btn btn-success" 
-        type='submit'
-        onClick={this.handleBtn}>
-          Search
-        </button>
-      </form>
+      <div>
+        <div className="input-group mb-3">
+          <input
+            type="search"
+            className="form-control"
+            placeholder="Search"
+            value={this.state.search}
+            onChange={this.changeInput}
+            onKeyDown={this.handleKey}
+          />
+          <button
+            className="btn btn-outline-secondary"
+            type="button"
+            onClick={() => {
+              this.props.searchMovies(this.state.search);
+              this.setState({ search: "" });
+            }}
+          >
+            Search
+          </button>
+        </div>
+      </div>
     );
   }
 }

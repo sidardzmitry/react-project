@@ -6,28 +6,34 @@ import Spinner from "..//..//components/Spinner/Spinner";
 class Main extends Component {
   state = {
     movies: [],
+    loading: true,
+  };
+
+  searchMovies = (str) => {
+    this.setState({loading: true});
+    fetch(`http://www.omdbapi.com/?apikey=951b9588&s=${str}`)
+      .then((response) => response.json())
+      .then((data) => this.setState({ movies: data.Search, loading: false }));
   };
 
   componentDidMount() {
     fetch("http://www.omdbapi.com/?apikey=951b9588&s=matrix")
       .then((response) => response.json())
-      .then((data) => this.setState({ movies: data.Search }));
+      .then((data) => this.setState({ movies: data.Search, loading: false }));
   }
 
-  searchMovies = (str) => {
-    fetch(`http://www.omdbapi.com/?apikey=951b9588&s=${str}`)
-      .then((response) => response.json())
-      .then((data) => this.setState({ movies: data.Search }));
-  };
-
   render() {
-    const { movies } = this.state;
+    const { movies, loading } = this.state;
 
     return (
-      <main className="container">
-      <Search searchMovies={this.searchMovies}/>
-        {movies.length ? <Movies movies={this.state.movies} /> : <Spinner />}
-      </main>
+            <main className="container">
+                <Search searchMovies={this.searchMovies} />
+                {loading ? (
+                    <Spinner />
+                ) : (
+                    <Movies movies={movies} />
+                )}
+            </main>
     );
   }
 }
