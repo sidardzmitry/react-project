@@ -1,28 +1,27 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 
-class Search extends Component {
-  state = {
-    search: "",
-    type: 'all'
+const Search = (props) => {
+
+  const {searchMovies = Function.prototype} = props;
+  const [search, setSearch] = useState('')
+  const [type, setType] = useState('all')
+
+
+  const changeInput = (event) => {
+    setSearch(event.target.value);
   };
 
-  changeInput = (event) => {
-    this.setState({ search: event.target.value });
-  };
-
-  handleKey = (event) => {
+  const handleKey = (event) => {
     if (event.key === "Enter") {
-      this.props.searchMovies(this.state.search, this.state.type);
-      this.setState({ search: "" });
+      searchMovies(search, type);
+      setSearch(search(''));
     }
   };
-  handleFilter = (event) => {
-    this.setState(() => ({type: event.target.dataset.type}), () => {
-      this.props.searchMovies(this.state.search, this.state.type);
-    })
+  const handleFilter = (event) => {
+    setType(event.target.dataset.type);
+    searchMovies(search, event.target.dataset.type);
   }
 
-  render() {
     return (
       <div>
         <div className="input-group mb-3">
@@ -30,16 +29,16 @@ class Search extends Component {
             type="search"
             className="form-control"
             placeholder="Search"
-            value={this.state.search}
-            onChange={this.changeInput}
-            onKeyDown={this.handleKey}
+            value={search}
+            onChange={changeInput}
+            onKeyDown={handleKey}
           />
           <button
             className="btn btn-success"
             type="button"
             onClick={() => {
-              this.props.searchMovies(this.state.search, this.state.type);
-              this.setState({ search: "" });
+              searchMovies(search, type);
+              setSearch(search(''));
             }}
           >
             Search
@@ -53,8 +52,8 @@ class Search extends Component {
             id="inlineRadio1"
             value="option1"
             data-type='all'
-            onChange={this.handleFilter}
-            checked={this.state.type === 'all'}
+            onChange={handleFilter}
+            checked={type === 'all'}
           />
           <label className="form-check-label" htmlFor="inlineRadio1">
             All
@@ -68,8 +67,8 @@ class Search extends Component {
             id="inlineRadio2"
             value="option2"
             data-type='movie'
-            onChange={this.handleFilter}
-            checked={this.state.type === 'movie'}
+            onChange={handleFilter}
+            checked={type === 'movie'}
           />
           <label className="form-check-label" htmlFor="inlineRadio2">
             Movie
@@ -83,8 +82,8 @@ class Search extends Component {
             id="inlineRadio3"
             value="option3"
             data-type='series'
-            onChange={this.handleFilter}
-            checked={this.state.type === 'series'}
+            onChange={handleFilter}
+            checked={type === 'series'}
           />
           <label className="form-check-label" htmlFor="inlineRadio3">
             Series
@@ -93,6 +92,5 @@ class Search extends Component {
       </div>
     );
   }
-}
 
 export default Search;
