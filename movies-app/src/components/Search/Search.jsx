@@ -14,7 +14,7 @@ const Search = (props) => {
   const handleKey = (event) => {
     if (event.key === "Enter") {
       searchMovies(search, type);
-      setSearch(search(''));
+      // setSearch({search: ''});
     }
   };
   const handleFilter = (event) => {
