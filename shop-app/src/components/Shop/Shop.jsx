@@ -5,6 +5,7 @@ import GoodsList from "../GoodsList/GoodsList";
 import ShoppingCart from "../ShoppingCart/ShoppingCart";
 import ShoppingList from "../ShoppingList/ShoppingList";
 
+
 const Shop = () => {
   const [goods, setGoods] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -38,6 +39,11 @@ const Shop = () => {
     setShoppingCartShow(!isShoppingCartShow);
   };
 
+  const removeShoppingItem = (itemId) => {
+    const newOrder = order.filter((el) => el.id !== itemId);
+    setOrder(newOrder);
+  };
+
   useEffect(function getGoods() {
     fetch(API_URL, {
       headers: {
@@ -62,9 +68,13 @@ const Shop = () => {
         quantity={order.length}
         handleShoppingCartShow={handleShoppingCartShow}
       />
-      {
-        isShoppingCartShow && <ShoppingList order={order}/>
-      }
+      {isShoppingCartShow && (
+        <ShoppingList
+          order={order}
+          handleShoppingCartShow={handleShoppingCartShow}
+          removeShoppingItem={removeShoppingItem}
+        />
+      )}
     </div>
   );
 };

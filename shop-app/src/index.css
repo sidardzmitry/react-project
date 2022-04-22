@@ -35,3 +35,25 @@ body {
     right: 2rem;
   }
 }
+.shopping__list{
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  background-color: aquamarine;
+  width: 30rem;
+  max-width: 95%;
+}
+.icon__close{
+  cursor: pointer;
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  color: rgb(0, 148, 116);
+}
+.close__item{
+  cursor: pointer;
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+}
