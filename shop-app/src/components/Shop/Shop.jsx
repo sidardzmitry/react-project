@@ -3,13 +3,13 @@ import { API_KEY, API_URL } from "..//..//config";
 import Spinner from "..//Spinner/Spinner";
 import GoodsList from "../GoodsList/GoodsList";
 import ShoppingCart from "../ShoppingCart/ShoppingCart";
+import ShoppingList from "../ShoppingList/ShoppingList";
 
 const Shop = () => {
   const [goods, setGoods] = useState([]);
   const [loading, setLoading] = useState(true);
   const [order, setOrder] = useState([]);
   const [isShoppingCartShow, setShoppingCartShow] = useState(false);
-
 
   const getToShoppingCart = (item) => {
     const itemIndex = order.findIndex((orderItem) => orderItem.id === item.id);
@@ -21,22 +21,22 @@ const Shop = () => {
       setOrder([...order, newItem]);
     } else {
       const newOrder = order.map((orderItem, index) => {
-        if(index === itemIndex) {
+        if (index === itemIndex) {
           return {
             ...orderItem,
-            quantity: orderItem.quantity + 1
-          }
+            quantity: orderItem.quantity + 1,
+          };
         } else {
-          return orderItem
+          return orderItem;
         }
-      })
-      setOrder(newOrder)
+      });
+      setOrder(newOrder);
     }
   };
 
   const handleShoppingCartShow = () => {
-    setShoppingCartShow(!isShoppingCartShow)
-  }
+    setShoppingCartShow(!isShoppingCartShow);
+  };
 
   useEffect(function getGoods() {
     fetch(API_URL, {
@@ -53,8 +53,18 @@ const Shop = () => {
 
   return (
     <div className="container">
-      {loading ? <Spinner /> : <GoodsList goods={goods} getToShoppingCart={getToShoppingCart}/>}
-      <ShoppingCart quantity={order.length} handleShoppingCartShow={handleShoppingCartShow}/>
+      {loading ? (
+        <Spinner />
+      ) : (
+        <GoodsList goods={goods} getToShoppingCart={getToShoppingCart} />
+      )}
+      <ShoppingCart
+        quantity={order.length}
+        handleShoppingCartShow={handleShoppingCartShow}
+      />
+      {
+        isShoppingCartShow && <ShoppingList order={order}/>
+      }
     </div>
   );
 };

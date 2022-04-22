@@ -10,7 +10,7 @@ const ShoppingItem = (props) => {
 
     return(
         <li className="list-group-item">{name} x{quantity} = {price} 
-        <span></span>
+        <span><i class="bi bi-x"></i></span>
         </li>
     )
 }
