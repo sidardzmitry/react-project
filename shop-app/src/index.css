@@ -43,6 +43,7 @@ body {
   background-color: aquamarine;
   width: 30rem;
   max-width: 95%;
+  animation: show 200ms;
 }
 .icon__close{
   cursor: pointer;
@@ -56,4 +57,14 @@ body {
   position: absolute;
   top: 0.5rem;
   right: 0.5rem;
+}
+@keyframes show {
+  from {
+    top: 70%;
+    opacity: 0;
+  }
+  to{
+    top: 50%;
+    opacity: 1;
+  }
 }

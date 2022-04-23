@@ -5,7 +5,6 @@ import GoodsList from "../GoodsList/GoodsList";
 import ShoppingCart from "../ShoppingCart/ShoppingCart";
 import ShoppingList from "../ShoppingList/ShoppingList";
 
-
 const Shop = () => {
   const [goods, setGoods] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -35,13 +34,47 @@ const Shop = () => {
     }
   };
 
-  const handleShoppingCartShow = () => {
-    setShoppingCartShow(!isShoppingCartShow);
+  const removeShoppingItem = (itemId) => {
+    const newOrderN = order.filter((el) => el.id !== itemId);
+    setOrder(newOrderN);
   };
 
-  const removeShoppingItem = (itemId) => {
-    const newOrder = order.filter((el) => el.id !== itemId);
+  // const removeShoppingItem = (itemId) => {
+  //   setOrder(order.filter((el) => el.id !== itemId));
+  // };
+
+  const incQuantity = (itemId) => {
+    const newOrder = order.map((el) => {
+      if (el.id === itemId) {
+        const newQuantity = el.quantity + 1;
+        return {
+          ...el,
+          quantity: newQuantity,
+        };
+      } else {
+        return el;
+      }
+    });
     setOrder(newOrder);
+  };
+
+  const decQuantity = (itemId) => {
+    const newOrder = order.map((el) => {
+      if (el.id === itemId) {
+        const newQuantity = el.quantity - 1;
+        return {
+          ...el,
+          quantity: newQuantity >= 0 ? newQuantity : 0,
+        };
+      } else {
+        return el;
+      }
+    });
+    setOrder(newOrder);
+  };
+
+  const handleShoppingCartShow = () => {
+    setShoppingCartShow(!isShoppingCartShow);
   };
 
   useEffect(function getGoods() {
@@ -52,7 +85,7 @@ const Shop = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        data.featured && setGoods(data.featured);
+        data.daily && setGoods(data.daily);
         setLoading(false);
       });
   }, []);
@@ -73,6 +106,8 @@ const Shop = () => {
           order={order}
           handleShoppingCartShow={handleShoppingCartShow}
           removeShoppingItem={removeShoppingItem}
+          incQuantity={incQuantity}
+          decQuantity={decQuantity}
         />
       )}
     </div>

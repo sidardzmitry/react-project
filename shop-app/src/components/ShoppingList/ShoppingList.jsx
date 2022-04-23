@@ -6,6 +6,8 @@ const ShoppingList = (props) => {
     order = [],
     handleShoppingCartShow = Function.prototype,
     removeShoppingItem = Function.prototype,
+    incQuantity = Function.prototype,
+    decQuantity = Function.prototype,
   } = props;
 
   const totalPrice = order.reduce((sum, el) => {
@@ -19,6 +21,8 @@ const ShoppingList = (props) => {
           <ShoppingItem
             key={item.id}
             removeShoppingItem={removeShoppingItem}
+            incQuantity={incQuantity}
+            decQuantity={decQuantity}
             {...item}
           />
         ))
